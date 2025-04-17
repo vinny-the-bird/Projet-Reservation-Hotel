@@ -50,6 +50,23 @@ Avec le screenshot du schéma de base de données via le concepteur, j'en profit
 
 3e tentative : SUCCES, toutes les données sont correctement importées.
 
+
+Ajout 1 (fix) : Impossible d'afficher la vue avec les relations et elles sont également manquantes dans le schéma. Bien que la base de données soit bien importée, la section avec les relations n'est pas prise en compte car le moteur est MyIsam. Changement du code pour que tout soit en InnoDB. 
+
+Un autre problème émerge alors maintenant que les contraintes sont bien prises en compte et appliquées : l'incompatibilité entre les données utilisées pour les id. Certaines sont en int ou tinyint, et certaines sont unsigned. J'ai tout harmonisé de la manière suivante : 
+
+- tout en int, qui peut le plus peut le moins
+- unsigned appliqué à tous (on ne prend pas de valeurs négatives)
+- conservation du nombre de characteres maximum originaux
+
+Ajout 2 (fix) : L'import du fichier de données ne passe et renvoie l'erreur suivante : 
+    #1452 - Cannot add or update a child row: a foreign key constraint fails (reservation_hotel.chambres, CONSTRAINT chambres_ibfk_2 FOREIGN KEY (id_hotel) REFERENCES hotels (id) ON DELETE CASCADE ON UPDATE CASCADE)
+
+A cause des contraintes, les tables doivent être créées dans un ordre précis. On ne peut pas réclamer en clé étrangère un id d'une table qui n'a pas encore été insérée. J'ai pris un screenshot du schéma de la base de données avec les liaisons (disponible dans les fichiers) et ai réorganisé le fichier de données, en commençant par la fin, c'est à dire d'abord les tables qui n'ont pas de clés étrangères (couchages, salle de bain, hotels) puis celles qui ont besoin de clés étrangères
+
+L'import des données fonctionne à nouveau correctement.
+
+
 # Tâche 1. 2 Expliquer sur quel point il faut être vigilant
 
 Il est nécessaire de réaliser une convention de nommage, afin que toute l'équipe la respecte et puisse travailler de manière autonome, sans risques de créer des erreurs ou conflits. Cela couvre notamment la langue, les séparateurs et les majuscules, minuscules. Se référer aux différentes conventions déjà existantes (camelCase, snake_case, etc)
