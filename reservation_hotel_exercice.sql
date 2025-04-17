@@ -39,6 +39,7 @@ DROP TABLE IF EXISTS `chambre_types`;
 CREATE TABLE IF NOT EXISTS `chambre_types` (
   `id` int(11) UNSIGNED NOT NULL,
   `nom` varchar(50) NOT NULL,
+  `description` varchar(250) NOT NULL,
   `id_salle_de_bain` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_salle_de_bain` (`id_salle_de_bain`)
@@ -116,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `tarifs` (
   `id` int(11) UNSIGNED NOT NULL,
   `id_hotel` int(11) DEFAULT NULL,
   `id_type` int(11) DEFAULT NULL,
-  `dateDebut` date DEFAULT NULL,
+  `date_debut` date DEFAULT NULL,
   `prix` decimal(7,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Tarifs_Hotels` (`id_hotel`),
