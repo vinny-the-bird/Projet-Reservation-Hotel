@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `chambres` (
   `numero` varchar(6) NOT NULL,
   `commentaire` text DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_hotel` (`id_hotel`,`numChambre`),
+  UNIQUE KEY `id_hotel` (`id_hotel`,`numero`),
   KEY `FK_Chambres_Hotels` (`id_hotel`),
   KEY `FK_Chambres_TypesChambre` (`id_type`)
 ) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -39,6 +39,7 @@ DROP TABLE IF EXISTS `chambre_types`;
 CREATE TABLE IF NOT EXISTS `chambre_types` (
   `id` int(11) UNSIGNED NOT NULL,
   `nom` varchar(50) NOT NULL,
+  `description` varchar(250) NOT NULL,
   `id_salle_de_bain` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_salle_de_bain` (`id_salle_de_bain`)
@@ -116,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `tarifs` (
   `id` int(11) UNSIGNED NOT NULL,
   `id_hotel` int(11) DEFAULT NULL,
   `id_type` int(11) DEFAULT NULL,
-  `dateDebut` date DEFAULT NULL,
+  `date_debut` date DEFAULT NULL,
   `prix` decimal(7,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Tarifs_Hotels` (`id_hotel`),
@@ -142,8 +143,8 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
 -- Contraintes pour la table `chambres`
 --
 ALTER TABLE `chambres`
-  ADD CONSTRAINT `chambres_ibfk_1` KEY (`id_type`) REFERENCES `chambre_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `chambres_ibfk_2` KEY (`id_hotel`) REFERENCES `hotels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `chambres_ibfk_1` FOREIGN KEY (`id_type`) REFERENCES `chambre_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `chambres_ibfk_2` FOREIGN KEY (`id_hotel`) REFERENCES `hotels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `chambre_types`
@@ -155,16 +156,16 @@ ALTER TABLE `chambre_types`
 -- Contraintes pour la table `chambre_type_couchage`
 --
 ALTER TABLE `chambre_type_couchage`
-  ADD CONSTRAINT `chambre_type_couchage_ibfk_1` KEY (`id_type`) REFERENCES `chambre_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `chambre_type_couchage_ibfk_2` KEY (`id_couchage`) REFERENCES `couchages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `chambre_type_couchage_ibfk_1` FOREIGN KEY (`id_type`) REFERENCES `chambre_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `chambre_type_couchage_ibfk_2` FOREIGN KEY (`id_couchage`) REFERENCES `couchages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 --
 -- Contraintes pour la table `tarifs`
 --
 ALTER TABLE `tarifs`
-  ADD CONSTRAINT `tarifs_ibfk_1` KEY (`id_hotel`) REFERENCES `hotels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tarifs_ibfk_2` KEY (`id_type`) REFERENCES `chambre_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tarifs_ibfk_1` FOREIGN KEY (`id_hotel`) REFERENCES `hotels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tarifs_ibfk_2` FOREIGN KEY (`id_type`) REFERENCES `chambre_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
