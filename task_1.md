@@ -45,7 +45,7 @@ INSERT INTO `tarifs` (`id`, `id_hotel`, `id_type`, `date_debut`, `prix`) VALUES
 (8, 2, 1, '2021-12-15', '57.49'),
 #1054 - Champ 'date_debut' inconnu dans field list
 
-Après vérification, le champs dans la table tarifs se nomme dateDebut. Tous les autres champs sont bien nommés avec un séparateur "\_", il y a eu non-respect de la convention de nommage coté base de données. J'édite le fichier en utilisant le champs "date_debut".
+Après vérification, le champs dans la table tarifs se nomme dateDebut. Tous les autres champs sont bien nommés avec un séparateur "_", il y a eu non-respect de la convention de nommage coté base de données. J'édite le fichier en utilisant le champs "date_debut".
 Avec le screenshot du schéma de base de données via le concepteur, j'en profite pour vérifier tous les champs. A priori, c'était la dernière faute.
 
 3e tentative : SUCCES, toutes les données sont correctement importées.
