@@ -21,6 +21,57 @@ SET time_zone = "+00:00";
 -- Base de données : `reservation_hotel`
 --
 
+
+--
+-- Déchargement des données de la table `couchages`
+--
+
+INSERT INTO `couchages` (`id`, `nom`, `nb_places`) VALUES
+(1, 'Lit simple', 1),
+(2, 'Lit double', 2),
+(3, 'Lit XL', 2),
+(4, 'Lit superposé', 1);
+
+
+
+--
+-- Déchargement des données de la table `salles_de_bain`
+--
+
+INSERT INTO `salles_de_bain` (`id`, `nom`) VALUES
+(3, 'Baignoire'),
+(4, 'Baignoire et WC séparé'),
+(1, 'Douche'),
+(2, 'Douche et WC séparé');
+
+
+--
+-- Déchargement des données de la table `chambre_types`
+--
+
+INSERT INTO `chambre_types` (`id`, `nom`, `description`, `id_salle_de_bain`) VALUES
+(1, 'Chambre Standard', '1 lit simple avec douche (1 personne )', 1),
+(2, 'Chambre Twin', '2 lits simples avec douche ( 2 personnes )', 1),
+(3, 'Chambre Twin +', '2 lits simples avec douche et wc séparé (2 personnes )', 2),
+(4, 'Chambre Double', '1 lit double avec douche (2 personnes)', 1),
+(5, 'Chambre Double +', '1 lit double avec douche et WC séparé (2 personnes)', 2),
+(6, 'Chambre Familiale', '1 lit double, 2 lits superposés avec douche et WC séparé (4 personnes)', 2),
+(7, 'Chambre Familiale +', '1 lit double avec bain et WC séparé (4 personnes)', 4),
+(8, 'Chambre King Size', '1 lit double large avec bain et WC séparé (2 personnes)', 4);
+
+
+
+--
+-- Déchargement des données de la table `hotels`
+--
+
+INSERT INTO `hotels` (`id`, `libelle`, `etoile`) VALUES
+(1, 'Ski Hotel', '*'),
+(2, 'Art Hotel', '**'),
+(3, 'Rose Hotel', '***'),
+(4, 'Lions Hotel', '****');
+
+
 --
 -- Déchargement des données de la table `chambres`
 --
@@ -53,63 +104,6 @@ INSERT INTO `chambres` (`id`, `id_hotel`, `id_type`, `numero`, `commentaire`) VA
 (28, 4, 8, '7', NULL),
 (29, 1, 5, '5', 'Reservée aux VIP');
 
---
--- Déchargement des données de la table `chambre_types`
---
-
-INSERT INTO `chambre_types` (`id`, `nom`, `description`, `id_salle_de_bain`) VALUES
-(1, 'Chambre Standard', '1 lit simple avec douche (1 personne )', 1),
-(2, 'Chambre Twin', '2 lits simples avec douche ( 2 personnes )', 1),
-(3, 'Chambre Twin +', '2 lits simples avec douche et wc séparé (2 personnes )', 2),
-(4, 'Chambre Double', '1 lit double avec douche (2 personnes)', 1),
-(5, 'Chambre Double +', '1 lit double avec douche et WC séparé (2 personnes)', 2),
-(6, 'Chambre Familiale', '1 lit double, 2 lits superposés avec douche et WC séparé (4 personnes)', 2),
-(7, 'Chambre Familiale +', '1 lit double avec bain et WC séparé (4 personnes)', 4),
-(8, 'Chambre King Size', '1 lit double large avec bain et WC séparé (2 personnes)', 4);
-
---
--- Déchargement des données de la table `chambre_type_couchage`
---
-
-INSERT INTO `chambre_type_couchage` (`id_type`, `id_couchage`, `qte`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 2),
-(4, 2, 1),
-(5, 2, 1),
-(6, 2, 1),
-(6, 4, 2),
-(8, 3, 1);
-
---
--- Déchargement des données de la table `couchages`
---
-
-INSERT INTO `couchages` (`id`, `nom`, `nb_places`) VALUES
-(1, 'Lit simple', 1),
-(2, 'Lit double', 2),
-(3, 'Lit XL', 2),
-(4, 'Lit superposé', 1);
-
---
--- Déchargement des données de la table `hotels`
---
-
-INSERT INTO `hotels` (`id`, `libelle`, `etoile`) VALUES
-(1, 'Ski Hotel', '*'),
-(2, 'Art Hotel', '**'),
-(3, 'Rose Hotel', '***'),
-(4, 'Lions Hotel', '****');
-
---
--- Déchargement des données de la table `salles_de_bain`
---
-
-INSERT INTO `salles_de_bain` (`id`, `nom`) VALUES
-(3, 'Baignoire'),
-(4, 'Baignoire et WC séparé'),
-(1, 'Douche'),
-(2, 'Douche et WC séparé');
 
 --
 -- Déchargement des données de la table `tarifs`
@@ -159,6 +153,27 @@ INSERT INTO `tarifs` (`id`, `id_hotel`, `id_type`, `date_debut`, `prix`) VALUES
 (55, 3, 6, '2021-04-16', '79.99'),
 (56, 3, 8, '2021-04-16', '89.99');
 COMMIT;
+
+
+
+
+--
+-- Déchargement des données de la table `chambre_type_couchage`
+--
+
+INSERT INTO `chambre_type_couchage` (`id_type`, `id_couchage`, `qte`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 2),
+(4, 2, 1),
+(5, 2, 1),
+(6, 2, 1),
+(6, 4, 2),
+(8, 3, 1);
+
+
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
