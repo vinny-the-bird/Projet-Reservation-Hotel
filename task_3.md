@@ -32,14 +32,11 @@ chambre_types.nom as type,
 salles_de_bain.nom as sanitaire,
 concat(chambre_type_couchage.qte, 'x' ,couchages.nom ) as details,
 couchages.nb_places * chambre_type_couchage.qte as nb_personnes
-
 FROM `chambre_types`
 JOIN salles_de_bain
 ON id_salle_de_bain = salles_de_bain.id
-
 JOIN chambre_type_couchage
 ON id_type = chambre_types.id
-
 JOIN couchages
 ON couchages.id = chambre_type_couchage.id_couchage
 ORDER BY chambre_types.id
@@ -51,5 +48,46 @@ Erreurs détectées :
 
 ## Tâche 3.1 Donner le script de la vue vue_chambre_types
 
-T
+CREATE VIEW vue_chambre_types AS
+SELECT chambre_types.id,
+chambre_types.nom as type, 
+salles_de_bain.nom as sanitaire,
+concat(chambre_type_couchage.qte, 'x' ,couchages.nom ) as details,
+couchages.nb_places * chambre_type_couchage.qte as nb_personnes
+FROM `chambre_types`
+JOIN salles_de_bain
+ON id_salle_de_bain = salles_de_bain.id
+JOIN chambre_type_couchage
+ON id_type = chambre_types.id
+JOIN couchages
+ON couchages.id = chambre_type_couchage.id_couchage
+ORDER BY chambre_types.id
+
 ## tâche 3.2 Proposer une vue, en précisant les colonnes, et en expliquant votre choix.
+
+
+
+CREATE view vue_chambres_hotel_prix AS
+SELECT  hotels.libelle,
+hotels.etoile,
+chambre_types.nom as type, 
+salles_de_bain.nom as sanitaire,
+concat(chambre_type_couchage.qte, 'x' ,couchages.nom ) as details,
+couchages.nb_places * chambre_type_couchage.qte as nb_personnes,
+tarifs.prix,
+ROUND(tarifs.prix / (couchages.nb_places * chambre_type_couchage.qte), 2) as prix_personne
+
+FROM `chambre_types`
+JOIN salles_de_bain
+ON id_salle_de_bain = salles_de_bain.id
+JOIN chambre_type_couchage
+ON id_type = chambre_types.id
+JOIN couchages
+ON couchages.id = chambre_type_couchage.id_couchage
+JOIN tarifs 
+ON tarifs.id_type = chambre_types.id
+JOIN hotels
+ON tarifs.id_hotel = hotels.id
+ORDER BY hotels.etoile
+
+
